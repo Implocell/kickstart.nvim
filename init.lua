@@ -683,6 +683,7 @@ require('lazy').setup {
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
+        omnisharp = {},
         bashls = {
           filetypes = { 'sh', 'bash', 'zsh', 'envrc' },
         },
@@ -961,6 +962,7 @@ require('lazy').setup {
       ensure_installed = {
         'bash',
         'c',
+        'c_sharp',
         'diff',
         'html',
         'lua',
