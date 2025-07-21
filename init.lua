@@ -245,7 +245,7 @@ rtp:prepend(lazypath)
 --    :Lazy update
 --
 -- NOTE: Here is where you install your plugins.
-require('lazy').setup({
+require('lazy').setup {
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
 
@@ -683,6 +683,13 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
+        protols = {},
+        bashls = {
+          filetypes = { 'sh', 'bash', 'zsh', 'envrc' },
+        },
+        vimls = {
+          filetypes = { 'vim' },
+        },
         ts_ls = {},
         emmet_ls = {},
         html = {},
@@ -893,24 +900,21 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+    'catppuccin/nvim',
+    version = false,
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent_background = true,
+    },
+    config = function(_, opts)
+      require('catppuccin').setup(opts)
+      vim.cmd.colorscheme 'catppuccin-mocha'
+      vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'NONE' })
+      vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'NONE' })
     end,
-  },
+  }, -- Highlight todo, notes, etc in comments
 
-  -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
   { -- Collection of various small independent plugins/modules
@@ -1043,7 +1047,6 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
-})
-
+}
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
