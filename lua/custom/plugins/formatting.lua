@@ -39,6 +39,12 @@ return {
             'biome.json',
           },
         },
+        csharpier = {
+          command = 'csharpier',
+          -- args = { '--stdin' },
+          -- stdin = true,
+        },
+
         stylua = {
           prepend_args = { '--indent-type', 'Spaces', '--indent-width', '2' },
         },
