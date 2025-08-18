@@ -632,6 +632,7 @@ require('lazy').setup {
         vimls = {
           filetypes = { 'vim' },
         },
+        biome = {},
         ts_ls = {},
         emmet_ls = {},
         html = {},
