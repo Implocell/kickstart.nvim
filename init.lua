@@ -590,7 +590,7 @@ require('lazy').setup {
       local servers = {
         -- clangd = {},
         gopls = {},
-        zlz = {},
+        zls = {},
         pyright = {},
         rust_analyzer = {},
         omnisharp = {
