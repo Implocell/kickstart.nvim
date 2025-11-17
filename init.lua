@@ -590,6 +590,7 @@ require('lazy').setup {
       local servers = {
         -- clangd = {},
         gopls = {},
+        zlz = {},
         pyright = {},
         rust_analyzer = {},
         omnisharp = {
@@ -635,6 +636,7 @@ require('lazy').setup {
         biome = {},
         ts_ls = {},
         emmet_ls = {},
+        marksman = {},
         html = {},
         tailwindcss = {},
         lua_ls = {
@@ -873,6 +875,7 @@ require('lazy').setup {
         'tsx',
         'terraform',
         'svelte',
+        'zig',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
