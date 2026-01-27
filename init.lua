@@ -163,9 +163,6 @@ require('lazy').setup {
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
 
-  {
-    'Hoffs/omnisharp-extended-lsp.nvim',
-  },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -399,7 +396,15 @@ require('lazy').setup {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-      { 'mason-org/mason.nvim', opts = {} },
+      {
+        'mason-org/mason.nvim',
+        opts = {
+          registries = {
+            'github:mason-org/mason-registry',
+            'github:Crashdummyy/mason-registry', -- This is required for roslyn
+          },
+        },
+      },
       'mason-org/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
@@ -593,40 +598,6 @@ require('lazy').setup {
         zls = {},
         pyright = {},
         rust_analyzer = {},
-        omnisharp = {
-          handlers = {
-            ['textDocument/definition'] = require('omnisharp_extended').handler,
-          },
-          -- Use the omnisharp-roslyn server instead of the legacy one
-          cmd = { 'omnisharp', '--languageserver', '--hostPID', tostring(vim.fn.getpid()) },
-
-          -- Enable additional features
-          enable_roslyn_analyzers = true,
-          organize_imports_on_format = true,
-          enable_import_completion = true,
-          analyze_open_documents_only = false,
-
-          -- Set the root directory detection
-          root_dir = function(fname)
-            return require('lspconfig.util').root_pattern('*.sln', '*.csproj', 'omnisharp.json', 'function.json')(fname)
-              or require('lspconfig.util').find_git_ancestor(fname)
-          end,
-
-          -- Additional settings
-          settings = {
-            FormattingOptions = {
-              EnableEditorConfigSupport = true,
-              OrganizeImports = true,
-            },
-            MsBuild = {
-              LoadProjectsOnDemand = false,
-            },
-            RoslynExtensionsOptions = {
-              EnableAnalyzersSupport = true,
-              EnableImportCompletion = true,
-            },
-          },
-        },
         bashls = {
           filetypes = { 'sh', 'bash', 'zsh', 'envrc' },
         },
@@ -671,8 +642,6 @@ require('lazy').setup {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'omnisharp', -- C# LSP server
-        'csharpier', -- C# formatter (if available through Mason)
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
